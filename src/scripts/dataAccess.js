@@ -1,6 +1,12 @@
+// import { mainContainer } from "./main.js"
+
+const applicationState = {
+
+    requests: []
+}
+
 const API = "http://localhost:8088"
 
-const mainContainer = document.querySelector("#container")
 
 export const fetchRequests = () => {
     return fetch(`${API}/requests`)
@@ -15,40 +21,6 @@ export const fetchRequests = () => {
                 applicationState.requests = serviceRequests
             }
         )
-}
-
-export const fetchCompletions = () => {
-    return fetch(`${API}/completion`)
-        .then(response => response.json())
-        .then(
-            (completionObj) => {
-                console.log(completionObj)
-                applicationState.completion = completionObj
-            }
-        )
-}
-export const fetchPlumbers = () => {
-    return fetch(`${API}/plumbers`)
-        .then(response => response.json())
-        .then(
-            (plumberData) => {
-                console.log(plumberData)
-                applicationState.plumbers = plumberData
-            }
-        )
-}
-
-const applicationState = {
-    plumbers: {},
-    requests: []
-}
-
-export const getRequests = () => {
-    return applicationState.requests.map(request => ({ ...request }))
-}
-
-export const getPlumbers = () => {
-    return [...applicationState.plumbers]
 }
 
 
@@ -67,4 +39,9 @@ export const sendRequest = (userServiceRequest) => {
         .then(() => {
             mainContainer.dispatchEvent(new CustomEvent("stateChanged"))
         })
+}
+
+
+export const getRequests = () => {
+    return applicationState.requests.map(request => ({ ...request }))
 }
